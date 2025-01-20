@@ -14,13 +14,13 @@ from folium.plugins import HeatMap
 # -----------------------------------------------------------------------------
 
 # Load the main dataset
-data = pd.read_csv("C:\\Users\\e_sho\\Desktop\\SSWD_POOL_V1.csv", low_memory=False)
+data = pd.read_csv("Your File Path to SSWD_POOL_V4.csv", low_memory=False)
 
 # Load the zip code coordinates dataset
-zip_coordinates = pd.read_csv("C:\\Users\\e_sho\\Desktop\\zip_code_coordinates.csv", low_memory=False)
+zip_coordinates = pd.read_csv("Your File Path to zip_code_coordinates.csv", low_memory=False)
 
 # Load the country coordinates dataset
-country_coordinates = pd.read_csv("C:\\Users\\e_sho\\Desktop\\country_and_state_coordinates.csv", low_memory=False)
+country_coordinates = pd.read_csv("Your File Path to country_and_state_coordinates.csv", low_memory=False)
 
 # Print raw data information
 num_rows, num_columns = data.shape
@@ -689,7 +689,7 @@ heat_data = [[row['Latitude'], row['Longitude']] for index, row in data.dropna(s
 HeatMap(heat_data).add_to(map)
 
 # Save or show the map
-map.save('C:\\Users\\e_sho\\Desktop\\heatmap.html')
+map.save('Your File Path to heatmap.html')
 # or display in a Jupyter notebook
 #map # Uncomment this if you're in a Jupyter notebook to display the map
 
@@ -800,4 +800,4 @@ columns_to_drop = [
 data.drop(columns_to_drop, axis=1, inplace=True)
 
 # Save the modified DataFrame to a new CSV file
-data.to_csv('C:\\Users\\e_sho\\Desktop\\modified_SSWD_POOL_V1.csv', index=False)
+data.to_csv('Your File Path to modified_SSWD_POOL_V4.csv', index=False)
