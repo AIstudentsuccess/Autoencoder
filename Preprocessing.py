@@ -36,7 +36,25 @@ for col in data.columns:
         print(f"{col}: {missing_count} missing values")
     else:
         print(f"{col}: No missing values")
-        
+
+# List of terms to look for in the 'COHORTTRM_DESC' column
+terms_to_exclude = [
+    'Fall 2020', 'Spring 2021', 'Fall 2021', 'Spring 2022', 
+    'Fall 2022', 'Spring 2023', 'Fall 2023'
+]
+
+# Filter out rows where 'COHORTTRM_DESC' is in the list of terms to exclude
+data = data[~data['COHORTTRM_DESC'].isin(terms_to_exclude)]
+
+# List of unique names to look for in the 'CH_CURRICULUM_1' column
+unique_names = [
+    'PMDT', 'DH', 'DLT', 'PPHAR', 'OPMDT', 'NURS', 'PNURS', 'OT', 'POT', 
+    'PPT', 'PA', 'PUBH', 'RC', 'MRA', 'PVMED', 'RT', 'RTH'
+]
+
+# Filter out rows where 'CH_CURRICULUM_1' is in the list of unique names
+data = data[~data['CH_CURRICULUM_1'].isin(unique_names)]
+
 # Filter out rows where ATHLETE is 1 or VETERAN_STATUS is 'Y'
 data = data[(data['ATHLETE'] != 1) & (data['VETERAN_STATUS'] != 'Y')]
 
@@ -44,19 +62,14 @@ data = data[(data['ATHLETE'] != 1) & (data['VETERAN_STATUS'] != 'Y')]
 data['CH_ENRLTYPE_encoded'] = data['CH_ENRLTYPE'].map({'Campus': 1, 'Online': 0})
 data['CHRTTYPE_encoded'] = data['CHRTTYPE'].map({'F': 1, 'T': 0})
 data['CRSLOAD_encoded'] = data['CRSLOAD'].map({'Full-time': 1, 'Part-time': 0})
-data['PVT_SCHOOL_FLAG_encoded'] = data['PVT_SCHOOL_FLAG'].map({'Y': 2, 'N': 0, 'U': 1}).fillna(1)
 data['GENDER_encoded'] = data['GENDER'].map({'M': 1, 'F': 0})
 data['FIRST_GEN_FLAG_encoded'] = data['FIRST_GEN_FLAG'].map({'Y': 2, 'N': 0, 'U': 1}).fillna(1)
 data['COUNTRY_DESC_encoded'] = data['COUNTRY_DESC'].apply(lambda x: 0 if x == 'United States' else 1)
 data['GREEK_ENTRY'].fillna(0, inplace=True)
 
-# One-hot encode 'DEGR_PROGRAM'
-degr_program_dummies = pd.get_dummies(data['DEGR_PROGRAM'], prefix='Program')
-data = pd.concat([data, degr_program_dummies], axis=1)
-
-# One-hot encode 'DEGR_COLLEGE'
-degr_college_dummies = pd.get_dummies(data['DEGR_COLLEGE'], prefix='College')
-data = pd.concat([data, degr_college_dummies], axis=1)
+# One-hot encode 'SLATE_HS_TYPE' including a column for NaN values
+hs_type_dummies = pd.get_dummies(data['SLATE_HS_TYPE'], prefix='HS_Type', dummy_na=True)
+data = pd.concat([data, hs_type_dummies], axis=1)
 
 # One-hot encode 'CH_CURRICULUM_1'
 curriculum_dummies = pd.get_dummies(data['CH_CURRICULUM_1'], prefix='Curriculum')
@@ -700,7 +713,7 @@ data['GRAD_YRS_ENCODED'] = data['GRAD_YRS'].apply(lambda x: encode_grad_years(x)
 
 # List of columns to drop
 columns_to_drop = [
-    'COHORTTRM', 'COHORTTRM_DESC', 'CH_ENRLTYPE', 'CHRTTYPE', 'CRSLOAD', 'LAST_TERM', 'LAST_TERM_DESC',
+    'COHORTTRM', 'CH_ENRLTYPE', 'CHRTTYPE', 'CRSLOAD', 'LAST_TERM', 'LAST_TERM_DESC',
     'DEGR_TERM', 'DEGR_TERM_DESC', 'DEGR_PROGRAM', 'DEGR_CURRIC', 'DEGR_COLLEGE', 'DEGR_STEM', 'GRAD_YRS', 'GRAD_4',
     'GRAD_5', 'GRAD_6', 'GRAD_LAST_CUM_GPA', 'GRAD_LAST_LSU_GPA', 'PVT_SCHOOL_FLAG', 'PRIOR_INST_LEVEL',
     'PRIOR_INST_OVRL_GPA', 'AGE_YEARS', 'GENDER', 'FOREIGN', 'COUNTRY_DESC', 'FIRST_GEN', 'LA_RESIDENT', 'HOMEZIPCODE',
@@ -724,7 +737,63 @@ columns_to_drop = [
     'YR7_FALL_CUM_HRS_EARN', 'YR7_SPRING_CUM_HRS_EARN', 'YR8_FALL_CUM_HRS_EARN', 'YR8_SPRING_CUM_HRS_EARN',
     'AC_ACT5', 'AC_ACT6', 'AC_ACT7', 'AC_ACT8', 'AC_ACT9', 'AC_ACT10', 'AC_ACT11', 'AC_ACT12', 'AC_ACT13', 'AC_ACT14',
     'AC_ACT15', 'AC_ACT16', 'programNameOriginal', 'inst_degreeLevelFilter', 'loc_status', 'emp_wageAgeAdjMax',
-    'emp_statusDetail', 'MostRecentCompany', 'Most_Recent_Start', 'Most_Recent_End', 'StartYear_All_Jobs', 'EndYear_All_Jobs'
+    'emp_statusDetail', 'MostRecentCompany', 'Most_Recent_Start', 'Most_Recent_End', 'StartYear_All_Jobs', 'EndYear_All_Jobs',
+    
+    
+    'YR1_FALL_CURRICULUM_1_EOS', 'YR1_SPRING_CURRICULUM_1_EOS',
+    'YR2_FALL_CURRICULUM_1_EOS', 'YR2_SPRING_CURRICULUM_1_EOS',
+    'YR3_FALL_CURRICULUM_1_EOS', 'YR3_SPRING_CURRICULUM_1_EOS',
+    'YR4_FALL_CURRICULUM_1_EOS', 'YR4_SPRING_CURRICULUM_1_EOS',
+    'YR5_FALL_CURRICULUM_1_EOS', 'YR5_SPRING_CURRICULUM_1_EOS',
+    'YR6_FALL_CURRICULUM_1_EOS', 'YR6_SPRING_CURRICULUM_1_EOS',
+    'YR7_FALL_CURRICULUM_1_EOS', 'YR7_SPRING_CURRICULUM_1_EOS',
+    'YR8_FALL_CURRICULUM_1_EOS', 'YR8_SPRING_CURRICULUM_1_EOS',
+    'CH_STEM', 'SLATE_HS_TYPE', 'Response_Date', 'Outcome',
+    'Employer_Name', 'Employer_Industry', 'Employment_Category',
+    'Employment_Type', 'Job_Function', 'Job_Position',
+    'Employed_During_Education', 'Internship', 'Still_Looking_Option',
+    'Not_Seeking_Option', 'Location', 'Offer_Date', 'Accept_Date',
+    
+    'Start_Date', 'Annual_Salary', 'Pay_Schedule', 'Bonus_Amount',
+    
+    'Other_Compensation', 'Knowledge_Source', 'Language_1',
+    
+    'Language_1_Proficiency', 'Language_2', 'Language_2_Proficiency',
+    'Language_3', 'Language_3_Proficiency', 'Language_4',
+    'Language_4_Proficiency', 'Language_5', 'Language_5_Proficiency',
+    
+    'Parent_1_Education_Level', 'Parent_2_Education_Level',
+    
+    'Step_Parent_1_Education_Level', 'Step_Parent_2_Education_Level',
+    
+    'Interest_Rank_1', 'Interest_Rank_2', 'Interest_Rank_3',
+    'Interest_Rank_4', 'Interest_Rank_5', 'NetTutor_Frequency',
+    
+    'Supplemental_Instruction_Attenda', 'Supplemental_Instruction_Office',
+    
+    'Signature_Strategies_Workshop_At', 'Study_Groups_Attendance_Frequenc',
+    
+    'Peer_Tutoring_Frequency', 'Academic_Coaching_Frequency',
+    
+    'Content_Strategy_Workshop_Freque', 'Impact_Workshop_Frequency',
+    'ORG_LSHIP_PSN_CNT', 'ORG_MSHIP_CNT', 'All_Memberships',
+    
+    'Project_Grant_Frequency', 'Travel_Stipend_Award_Frequency',
+    
+    'Explorer_Frequency', 'DURP_Frequency', 'SURF_Frequency',
+    
+    'Special_Collections_Frequency', 'SURE_Frequency', 'Gulf_Scholars_Frequency',
+    
+    'PFLR_Frequency', 'Discover_Day_Frequency', 'Research_Ambassador_Frequency',
+    
+    'CE_CxC', 'CE_Service_Learning', 'PC_Dual_Enrollment__LSU_',
+    'PC_Advanced_Placement__AP_', 'PC_Advanced_Standing',
+    'PC_Dual_Enrollment__Louisiana_HS', 'PC_CLEP',
+    'PC_International_Baccalaureate', 'PC_Credit_by_Department',
+    'PC_Prior_Summer__LSU_', 'PC_Dual_Enrollment__Non_Louisian',
+    'PC_Prior_Summer__Other_', 'PC_Other', 'PC_Dual_Enrollment__Foreign_HS_',
+    'PC_Service_Record', 'PC_GCE', 'PC_Correspondence',
+    'CH_CURRICULUM_1_DESC', 'CH_INTEND_CURRIC', 'CH_INTEND_COLLEGE'   
 ]
 
 # Drop the columns
