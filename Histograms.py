@@ -13,15 +13,16 @@ from torch.utils.data import DataLoader, TensorDataset
 import torch.optim as optim
 from sklearn.manifold import TSNE
 
-# Reading the SSWD_POOL_V1 CSV file
-data = pd.read_csv("modified_SSWD_POOL_V4.csv", low_memory=False)
+# -----------------------------------------------------------------------------
+# Examine the dataset
+# -----------------------------------------------------------------------------
+
+# Load the main dataset
+data = pd.read_csv("Your File Path to SSWD_POOL_V4.csv", low_memory=False)
 
 # Print raw data information
 num_rows, num_columns = data.shape
 print(f"The dataset has {num_rows} rows and {num_columns} columns.")
-
-# examine the dataset
-print(data.info())
 
 # Print only the column names
 for col in data.columns:
@@ -83,10 +84,9 @@ for col in columns_to_check:
     range_of_values = max_value - min_value
     print(f"Range of {col}: {range_of_values} (Min: {min_value}, Max: {max_value})")
 
-
-
-----------------------------------------------------------
-
+# -----------------------------------------------------------------------------
+# Plot histograms before standardization
+# -----------------------------------------------------------------------------
 
 # List of columns for which to plot histograms
 columns_to_plot = [
@@ -126,7 +126,6 @@ for col in columns_to_plot:
     #plt.title(f'Histogram of {col}')
     plt.ylabel('Frequency', fontsize=18)
     plt.show()
-  
 
  # List of categorical columns for which to plot pie charts
 categorical_columns = [
@@ -145,7 +144,9 @@ for col in categorical_columns:
     plt.ylabel('')
     plt.show()
 
-------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+# Plot histograms after applying standardization                                                                       
+# -----------------------------------------------------------------------------
 
 # Dropping the 'PROJECT_ID' and 'COHORTTRM_DESC' columns
 data = data.drop(columns=['PROJECT_ID', 'COHORTTRM_DESC'])
@@ -189,8 +190,6 @@ y_train_tensor = torch.tensor(y_train.values, dtype=torch.float32)
 y_val_tensor = torch.tensor(y_val.values, dtype=torch.float32)
 y_test_tensor = torch.tensor(y_test.values, dtype=torch.float32)
 
----------------
-
 # List of numerical columns for which to plot histograms after standardization
 numerical_columns = [
     'BESTMATH', 'BESTENGL', 'BESTCOMP', 'HS_ACAD_AVG', 'HS_OVERALL_AVG', 'AGE_MONTHS',
@@ -211,7 +210,6 @@ for col in numerical_columns:
     plt.ylabel('Frequency')
     plt.show()
     
-    
 # List of categorical columns for which to plot pie charts after standardization
 categorical_columns = [
     'HS_SCORE', 'Cumulative_Campus_Presence_Score', 'AC_ACT1', 'AC_ACT2', 'AC_ACT3', 'AC_ACT4'
@@ -226,10 +224,11 @@ for col in categorical_columns:
         plt.ylabel('') 
         plt.show()
 
-------------------------
+# -----------------------------------------------------------------------------
+# Plot histograms after applying standardization on the entire dataset                                                                   
+# -----------------------------------------------------------------------------
 
-# to see the effect of standardization on the entire dataset not just to the X_train subset you need to restart your kernel. 
-
+# Note: To see the effect of standardization on the entire dataset not just to the X_train subset you need to restart your kernel. 
 
 # Dropping the 'PROJECT_ID' and 'COHORTTRM_DESC' columns
 data = data.drop(columns=['PROJECT_ID', 'COHORTTRM_DESC'])
@@ -254,9 +253,6 @@ columns_to_standardize = [
 scaler = StandardScaler()
 x_standardized = x.copy()
 x_standardized[columns_to_standardize] = scaler.fit_transform(x[columns_to_standardize])
-
------------------------------------------
-
 
 # List of numerical columns for which to plot histograms after standardization
 numerical_columns = [
@@ -291,4 +287,3 @@ for col in categorical_columns:
         plt.title(f'Pie Chart of {col} (Standardized)')
         plt.ylabel('')  # Hide the y-label
         plt.show()  
-------------------------------------------
