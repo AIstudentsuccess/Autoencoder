@@ -228,7 +228,7 @@ for col in categorical_columns:
 # Plot histograms after applying standardization on the entire dataset                                                                   
 # -----------------------------------------------------------------------------
 
-# Note: To see the effect of standardization on the entire dataset not just to the X_train subset you need to restart your kernel. 
+# Note: To see the effect of standardization on the entire dataset not just to the X_train subset you need to restart your kernel, run the libraries, and load the main dataset again. 
 
 # Dropping the 'PROJECT_ID' and 'COHORTTRM_DESC' columns
 data = data.drop(columns=['PROJECT_ID', 'COHORTTRM_DESC'])
