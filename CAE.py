@@ -485,4 +485,3 @@ for text in disp.text_.ravel():
 plt.title('Validation set on Embeddings')
 plt.grid(False)  
 plt.show()
-
