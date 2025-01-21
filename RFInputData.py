@@ -129,6 +129,3 @@ for disp in [disp_val, disp_test]:
         text.set_fontsize(12)  
 plt.tight_layout()
 plt.show()
-
-# Save the ROC Data to a file
-np.savez('roc_input_data.npz', fpr=fpr, tpr=tpr, auc=roc_auc)
