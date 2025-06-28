@@ -14,13 +14,13 @@ from folium.plugins import HeatMap
 # -----------------------------------------------------------------------------
 
 # Load the main dataset
-data = pd.read_csv("Your File Path to SSWD_POOL_V4.csv", low_memory=False)
+data = pd.read_csv("Sample_data.csv", low_memory=False)
 
 # Load the zip code coordinates dataset
-zip_coordinates = pd.read_csv("Your File Path to zip_code_coordinates.csv", low_memory=False)
+zip_coordinates = pd.read_csv("zip_code_coordinates.csv", low_memory=False)
 
 # Load the country coordinates dataset
-country_coordinates = pd.read_csv("Your File Path to country_and_state_coordinates.csv", low_memory=False)
+country_coordinates = pd.read_csv("country_and_state_coordinates.csv", low_memory=False)
 
 # Print raw data information
 num_rows, num_columns = data.shape
@@ -221,7 +221,7 @@ def fill_missing_gpas(data, year):
         data[col] = data[col].fillna(median_gpas)
 
 # Example usage
-year_of_study = 2  
+year_of_study = 1  
 fill_missing_gpas(data, year_of_study)
 
 # -----------------------------------------------------------------------------
@@ -285,7 +285,7 @@ def fill_missing_gpas(data, year):
         data[col] = data[col].fillna(median_gpas)
 
 # Example usage
-year_of_study = 2  
+year_of_study = 1  
 fill_missing_gpas(data, year_of_study)
 
 # -----------------------------------------------------------------------------
@@ -349,7 +349,7 @@ def fill_missing_gpas(data, year):
         data[col] = data[col].fillna(median_gpas)
 
 # Example usage
-year_of_study = 2  
+year_of_study = 1  
 fill_missing_gpas(data, year_of_study)
 
 # -----------------------------------------------------------------------------
@@ -413,7 +413,7 @@ def fill_missing_hours(data, year):
         data[col] = data[col].fillna(median_hours)
 
 # Example usage
-year_of_study = 2  
+year_of_study = 1  
 fill_missing_hours(data, year_of_study)
 
 # -----------------------------------------------------------------------------
@@ -477,7 +477,7 @@ def fill_missing_hours_earned(data, year):
         data[col] = data[col].fillna(median_hours_earned)
 
 # Example usage
-year_of_study = 2  
+year_of_study = 1  
 fill_missing_hours_earned(data, year_of_study)
 
 # -----------------------------------------------------------------------------
@@ -564,7 +564,7 @@ def fill_missing_statuses(data, year):
         data[col] = data[col].fillna(median_statuses)
 
 # Example Usage
-year_of_study = 2  
+year_of_study = 1  
 fill_missing_statuses(data, year_of_study)
 
 # -----------------------------------------------------------------------------
@@ -711,14 +711,14 @@ data['GRAD_YRS_ENCODED'] = data['GRAD_YRS'].apply(lambda x: encode_grad_years(x)
 # Selective column removal
 # ----------------------------------------------------------------------------------------
 
-# List of columns to drop
+# List of columns to drop , 
 columns_to_drop = [
     'COHORTTRM', 'CH_ENRLTYPE', 'CHRTTYPE', 'CRSLOAD', 'LAST_TERM', 'LAST_TERM_DESC',
-    'DEGR_TERM', 'DEGR_TERM_DESC', 'DEGR_PROGRAM', 'DEGR_CURRIC', 'DEGR_COLLEGE', 'DEGR_STEM', 'GRAD_YRS', 'GRAD_4',
+    'DEGR_TERM', 'DEGR_TERM_DESC', 'DEGR_STEM', 'GRAD_YRS', 'GRAD_4',
     'GRAD_5', 'GRAD_6', 'GRAD_LAST_CUM_GPA', 'GRAD_LAST_LSU_GPA', 'PVT_SCHOOL_FLAG', 'PRIOR_INST_LEVEL',
     'PRIOR_INST_OVRL_GPA', 'AGE_YEARS', 'GENDER', 'FOREIGN', 'COUNTRY_DESC', 'FIRST_GEN', 'LA_RESIDENT', 'HOMEZIPCODE',
     'FIRST_GEN_FLAG', 'ATHLETE', 'VETERAN_STATUS', 'HS_TOP_10', 'HS_TOP_25', 'HS_TOP_50', 'HS_BOTTOM_25', 'HS_BOTTOM_50',
-    'CH_CURRICULUM_1', 'CH_CURRIC_DESC', 'CH_COLLEGE_1', 'CH_CURRIC_COLLEGE', 'YR1_FALL_ON_CAMPUS', 'YR1_SPRING_ON_CAMPUS',
+    'CH_CURRICULUM_1', 'CH_COLLEGE_1', 'CH_CURRIC_COLLEGE', 'YR1_FALL_ON_CAMPUS', 'YR1_SPRING_ON_CAMPUS',
     'YR2_FALL_ON_CAMPUS', 'YR2_SPRING_ON_CAMPUS', 'YR3_FALL_ON_CAMPUS', 'YR3_SPRING_ON_CAMPUS', 'YR4_FALL_ON_CAMPUS',
     'YR4_SPRING_ON_CAMPUS', 'YR5_FALL_ON_CAMPUS', 'YR5_SPRING_ON_CAMPUS', 'YR6_FALL_ON_CAMPUS', 'YR6_SPRING_ON_CAMPUS',
     'YR7_FALL_ON_CAMPUS', 'YR7_SPRING_ON_CAMPUS', 'YR8_FALL_ON_CAMPUS', 'YR8_SPRING_ON_CAMPUS', 'YR3_FALL_SEM_GPA',
@@ -736,68 +736,11 @@ columns_to_drop = [
     'YR5_FALL_CUM_HRS_EARN', 'YR5_SPRING_CUM_HRS_EARN', 'YR6_FALL_CUM_HRS_EARN', 'YR6_SPRING_CUM_HRS_EARN',
     'YR7_FALL_CUM_HRS_EARN', 'YR7_SPRING_CUM_HRS_EARN', 'YR8_FALL_CUM_HRS_EARN', 'YR8_SPRING_CUM_HRS_EARN',
     'AC_ACT5', 'AC_ACT6', 'AC_ACT7', 'AC_ACT8', 'AC_ACT9', 'AC_ACT10', 'AC_ACT11', 'AC_ACT12', 'AC_ACT13', 'AC_ACT14',
-    'AC_ACT15', 'AC_ACT16', 'programNameOriginal', 'inst_degreeLevelFilter', 'loc_status', 'emp_wageAgeAdjMax',
-    'emp_statusDetail', 'MostRecentCompany', 'Most_Recent_Start', 'Most_Recent_End', 'StartYear_All_Jobs', 'EndYear_All_Jobs',
-    
-    
-    'YR1_FALL_CURRICULUM_1_EOS', 'YR1_SPRING_CURRICULUM_1_EOS',
-    'YR2_FALL_CURRICULUM_1_EOS', 'YR2_SPRING_CURRICULUM_1_EOS',
-    'YR3_FALL_CURRICULUM_1_EOS', 'YR3_SPRING_CURRICULUM_1_EOS',
-    'YR4_FALL_CURRICULUM_1_EOS', 'YR4_SPRING_CURRICULUM_1_EOS',
-    'YR5_FALL_CURRICULUM_1_EOS', 'YR5_SPRING_CURRICULUM_1_EOS',
-    'YR6_FALL_CURRICULUM_1_EOS', 'YR6_SPRING_CURRICULUM_1_EOS',
-    'YR7_FALL_CURRICULUM_1_EOS', 'YR7_SPRING_CURRICULUM_1_EOS',
-    'YR8_FALL_CURRICULUM_1_EOS', 'YR8_SPRING_CURRICULUM_1_EOS',
-    'CH_STEM', 'SLATE_HS_TYPE', 'Response_Date', 'Outcome',
-    'Employer_Name', 'Employer_Industry', 'Employment_Category',
-    'Employment_Type', 'Job_Function', 'Job_Position',
-    'Employed_During_Education', 'Internship', 'Still_Looking_Option',
-    'Not_Seeking_Option', 'Location', 'Offer_Date', 'Accept_Date',
-    
-    'Start_Date', 'Annual_Salary', 'Pay_Schedule', 'Bonus_Amount',
-    
-    'Other_Compensation', 'Knowledge_Source', 'Language_1',
-    
-    'Language_1_Proficiency', 'Language_2', 'Language_2_Proficiency',
-    'Language_3', 'Language_3_Proficiency', 'Language_4',
-    'Language_4_Proficiency', 'Language_5', 'Language_5_Proficiency',
-    
-    'Parent_1_Education_Level', 'Parent_2_Education_Level',
-    
-    'Step_Parent_1_Education_Level', 'Step_Parent_2_Education_Level',
-    
-    'Interest_Rank_1', 'Interest_Rank_2', 'Interest_Rank_3',
-    'Interest_Rank_4', 'Interest_Rank_5', 'NetTutor_Frequency',
-    
-    'Supplemental_Instruction_Attenda', 'Supplemental_Instruction_Office',
-    
-    'Signature_Strategies_Workshop_At', 'Study_Groups_Attendance_Frequenc',
-    
-    'Peer_Tutoring_Frequency', 'Academic_Coaching_Frequency',
-    
-    'Content_Strategy_Workshop_Freque', 'Impact_Workshop_Frequency',
-    'ORG_LSHIP_PSN_CNT', 'ORG_MSHIP_CNT', 'All_Memberships',
-    
-    'Project_Grant_Frequency', 'Travel_Stipend_Award_Frequency',
-    
-    'Explorer_Frequency', 'DURP_Frequency', 'SURF_Frequency',
-    
-    'Special_Collections_Frequency', 'SURE_Frequency', 'Gulf_Scholars_Frequency',
-    
-    'PFLR_Frequency', 'Discover_Day_Frequency', 'Research_Ambassador_Frequency',
-    
-    'CE_CxC', 'CE_Service_Learning', 'PC_Dual_Enrollment__LSU_',
-    'PC_Advanced_Placement__AP_', 'PC_Advanced_Standing',
-    'PC_Dual_Enrollment__Louisiana_HS', 'PC_CLEP',
-    'PC_International_Baccalaureate', 'PC_Credit_by_Department',
-    'PC_Prior_Summer__LSU_', 'PC_Dual_Enrollment__Non_Louisian',
-    'PC_Prior_Summer__Other_', 'PC_Other', 'PC_Dual_Enrollment__Foreign_HS_',
-    'PC_Service_Record', 'PC_GCE', 'PC_Correspondence',
-    'CH_CURRICULUM_1_DESC', 'CH_INTEND_CURRIC', 'CH_INTEND_COLLEGE'   
+    'AC_ACT15', 'AC_ACT16', 'SLATE_HS_TYPE' 
 ]
 
 # Drop the columns
 data.drop(columns_to_drop, axis=1, inplace=True)
 
 # Save the modified DataFrame to a new CSV file
-data.to_csv('Your File Path to modified_SSWD_POOL_V4.csv', index=False)
+data.to_csv('Cleaned_Sample_data.csv', index=False)
