@@ -161,6 +161,22 @@ data['Cumulative_Campus_Presence_Score'] = data[campus_presence_columns].sum(axi
 
 # Now 'data' has a new column 'Cumulative_Campus_Presence_Score' with the calculated scores
 
+'''
+Preprocessing: Handling Missing GPA Values
+Procedure:
+
+Set the Year of Study: Before running the preprocessing code, set the year_of_study variable to the desired year. This variable controls which year's GPA data is being processed.
+
+For example, to process the first year's data, set year_of_study = 1.
+
+Run the Code: Execute the preprocessing functions to handle missing GPA values for the specified year.
+
+Repeat for Subsequent Years: After completing the process for one year, change the year_of_study to the next year (e.g., 2 for the second year) and rerun the code. Continue this process for each year of study as required by your model.
+
+Note: This process should be repeated similarly for other data columns like LSU_GPAs, CUM_GPAs, cumulative hours carried, cumulative hours earned, and academic statuses, adjusting the code accordingly to handle these specific columns.
+
+'''
+
 # -----------------------------------------------------------------------------
 # Handling the first year missing values for SEM_GPAs
 # -----------------------------------------------------------------------------
