@@ -14,7 +14,7 @@ from folium.plugins import HeatMap
 # -----------------------------------------------------------------------------
 
 # Load the main dataset
-data = pd.read_csv("Sample_data.csv", low_memory=False)
+data = pd.read_csv("sample_data.csv", low_memory=False)
 
 # Load the zip code coordinates dataset
 zip_coordinates = pd.read_csv("zip_code_coordinates.csv", low_memory=False)
@@ -161,22 +161,6 @@ data['Cumulative_Campus_Presence_Score'] = data[campus_presence_columns].sum(axi
 
 # Now 'data' has a new column 'Cumulative_Campus_Presence_Score' with the calculated scores
 
-'''
-Preprocessing: Handling Missing GPA Values
-Procedure:
-
-Set the Year of Study: Before running the preprocessing code, set the year_of_study variable to the desired year. This variable controls which year's GPA data is being processed.
-
-For example, to process the first year's data, set year_of_study = 1.
-
-Run the Code: Execute the preprocessing functions to handle missing GPA values for the specified year.
-
-Repeat for Subsequent Years: After completing the process for one year, change the year_of_study to the next year (e.g., 2 for the second year) and rerun the code. Continue this process for each year of study as required by your model.
-
-Note: This process should be repeated similarly for other data columns like LSU_GPAs, CUM_GPAs, cumulative hours carried, cumulative hours earned, and academic statuses, adjusting the code accordingly to handle these specific columns.
-
-'''
-
 # -----------------------------------------------------------------------------
 # Handling the first year missing values for SEM_GPAs
 # -----------------------------------------------------------------------------
@@ -237,7 +221,7 @@ def fill_missing_gpas(data, year):
         data[col] = data[col].fillna(median_gpas)
 
 # Example usage
-year_of_study = 1  
+year_of_study = 2 
 fill_missing_gpas(data, year_of_study)
 
 # -----------------------------------------------------------------------------
@@ -301,7 +285,7 @@ def fill_missing_gpas(data, year):
         data[col] = data[col].fillna(median_gpas)
 
 # Example usage
-year_of_study = 1  
+year_of_study = 2  
 fill_missing_gpas(data, year_of_study)
 
 # -----------------------------------------------------------------------------
@@ -365,7 +349,7 @@ def fill_missing_gpas(data, year):
         data[col] = data[col].fillna(median_gpas)
 
 # Example usage
-year_of_study = 1  
+year_of_study = 2  
 fill_missing_gpas(data, year_of_study)
 
 # -----------------------------------------------------------------------------
@@ -429,7 +413,7 @@ def fill_missing_hours(data, year):
         data[col] = data[col].fillna(median_hours)
 
 # Example usage
-year_of_study = 1  
+year_of_study = 2  
 fill_missing_hours(data, year_of_study)
 
 # -----------------------------------------------------------------------------
@@ -493,7 +477,7 @@ def fill_missing_hours_earned(data, year):
         data[col] = data[col].fillna(median_hours_earned)
 
 # Example usage
-year_of_study = 1  
+year_of_study = 2  
 fill_missing_hours_earned(data, year_of_study)
 
 # -----------------------------------------------------------------------------
@@ -580,7 +564,7 @@ def fill_missing_statuses(data, year):
         data[col] = data[col].fillna(median_statuses)
 
 # Example Usage
-year_of_study = 1  
+year_of_study = 2 
 fill_missing_statuses(data, year_of_study)
 
 # -----------------------------------------------------------------------------
@@ -729,10 +713,8 @@ data['GRAD_YRS_ENCODED'] = data['GRAD_YRS'].apply(lambda x: encode_grad_years(x)
 
 # List of columns to drop , 
 columns_to_drop = [
-    'COHORTTRM', 'CH_ENRLTYPE', 'CHRTTYPE', 'CRSLOAD', 'LAST_TERM', 'LAST_TERM_DESC',
-    'DEGR_TERM', 'DEGR_TERM_DESC', 'DEGR_STEM', 'GRAD_YRS', 'GRAD_4',
-    'GRAD_5', 'GRAD_6', 'GRAD_LAST_CUM_GPA', 'GRAD_LAST_LSU_GPA', 'PVT_SCHOOL_FLAG', 'PRIOR_INST_LEVEL',
-    'PRIOR_INST_OVRL_GPA', 'AGE_YEARS', 'GENDER', 'FOREIGN', 'COUNTRY_DESC', 'FIRST_GEN', 'LA_RESIDENT', 'HOMEZIPCODE',
+    
+    'CH_ENRLTYPE', 'CHRTTYPE', 'CRSLOAD', 'GRAD_YRS', 'GENDER', 'FOREIGN', 'COUNTRY_DESC', 'LA_RESIDENT', 'HOMEZIPCODE',
     'FIRST_GEN_FLAG', 'ATHLETE', 'VETERAN_STATUS', 'HS_TOP_10', 'HS_TOP_25', 'HS_TOP_50', 'HS_BOTTOM_25', 'HS_BOTTOM_50',
     'CH_CURRICULUM_1', 'CH_COLLEGE_1', 'CH_CURRIC_COLLEGE', 'YR1_FALL_ON_CAMPUS', 'YR1_SPRING_ON_CAMPUS',
     'YR2_FALL_ON_CAMPUS', 'YR2_SPRING_ON_CAMPUS', 'YR3_FALL_ON_CAMPUS', 'YR3_SPRING_ON_CAMPUS', 'YR4_FALL_ON_CAMPUS',
@@ -759,4 +741,4 @@ columns_to_drop = [
 data.drop(columns_to_drop, axis=1, inplace=True)
 
 # Save the modified DataFrame to a new CSV file
-data.to_csv('Cleaned_Sample_data.csv', index=False)
+data.to_csv('cleaned_sample_data.csv', index=False)
