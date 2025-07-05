@@ -18,7 +18,7 @@ from sklearn.manifold import TSNE
 # -----------------------------------------------------------------------------
 
 # Load the main dataset
-data = pd.read_csv("Cleaned_Sample_data.csv", low_memory=False)
+data = pd.read_csv("cleaned_sample_data.csv", low_memory=False)
 
 # Print raw data information
 num_rows, num_columns = data.shape
@@ -74,8 +74,10 @@ columns_to_check = [
     'GENDER_encoded', 'FIRST_GEN_FLAG_encoded',
     'COUNTRY_DESC_encoded', 'GRAD_YRS_ENCODED', 'HS_SCORE', 'Cumulative_Campus_Presence_Score',
     'Curriculum_ACCT', 'College_ADSN', 'Curric_College_ADSN',
-    'HS_Type_Charter', 'HS_Type_Home School', 'HS_Type_Independent', 'HS_Type_Public', 'HS_Type_Religious', 'HS_Type_nan'
+    'HS_Type_Charter', 'HS_Type_Independent', 'HS_Type_Public', 'HS_Type_Religious', 'HS_Type_nan'
 ]
+
+# Note: 'HS_Type_Home School' is not a column in the cleaned sample data; however, it exists in the entire dataset. 
 
 # Calculate and print the range for each column
 for col in columns_to_check:
@@ -133,8 +135,10 @@ categorical_columns = [
     'PELL', 'TOPS', 'GREEK_ENTRY', 'CH_ENRLTYPE_encoded', 'CHRTTYPE_encoded', 'CRSLOAD_encoded', 
     'GENDER_encoded', 'FIRST_GEN_FLAG_encoded', 'COUNTRY_DESC_encoded', 
     'GRAD_YRS_ENCODED',
-    'HS_Type_Charter', 'HS_Type_Home School', 'HS_Type_Independent', 'HS_Type_Public', 'HS_Type_Religious', 'HS_Type_nan'
+    'HS_Type_Charter', 'HS_Type_Independent', 'HS_Type_Public', 'HS_Type_Religious', 'HS_Type_nan'
 ]
+
+# Note: 'HS_Type_Home School' is not a column in the cleaned sample data; however, it exists in the entire dataset. 
 
 # Create a pie chart for each categorical column
 for col in categorical_columns:
