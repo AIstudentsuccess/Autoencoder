@@ -13,7 +13,7 @@ from sklearn.utils.class_weight import compute_class_weight
 from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 
 # Load the main dataset
-data = pd.read_csv("Cleaned_Sample_data.csv", low_memory=False)
+data = pd.read_csv("cleaned_sample_data.csv", low_memory=False)
 
 #------------------------------------------------------------------------------------------
 # Data preparation
@@ -57,7 +57,6 @@ x_test[columns_to_standardize] = scaler.transform(x_test[columns_to_standardize]
 x_train_full = pd.concat([x_train.drop(columns=columns_to_standardize), x_train[columns_to_standardize]], axis=1)
 x_val_full = pd.concat([x_val.drop(columns=columns_to_standardize), x_val[columns_to_standardize]], axis=1)
 x_test_full = pd.concat([x_test.drop(columns=columns_to_standardize), x_test[columns_to_standardize]], axis=1)
----------------------------------
 
 #------------------------------------------------------------------------------------------
 # Random Forest Model On Input Data
@@ -94,6 +93,8 @@ metrics_df = pd.DataFrame(metrics)
 print(metrics_df)
 
 # Plotting ROC Curve
+fpr, tpr, _ = roc_curve(y_test, rf.predict_proba(x_test_full)[:,1])
+roc_auc = auc(fpr, tpr)
 plt.figure(figsize=(4.5, 4.5))  
 plt.plot(fpr, tpr, lw=2, label=f'ROC curve (area = {roc_auc:.2f})')
 plt.plot([0, 1], [0, 1], color='navy', lw=2, linestyle='--')
