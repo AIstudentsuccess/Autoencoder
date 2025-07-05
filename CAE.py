@@ -23,7 +23,7 @@ from mpl_toolkits.mplot3d import Axes3D
 from sklearn.metrics import roc_curve, auc, confusion_matrix, ConfusionMatrixDisplay
 
 # Load the main dataset
-data = pd.read_csv("Cleaned_Sample_data.csv", low_memory=False)
+data = pd.read_csv("cleaned_sample_data.csv", low_memory=False)
 
 #------------------------------------------------------------------------------------------
 # Data preparation
@@ -109,79 +109,79 @@ class ConvAutoencoder(nn.Module):
         
         # Encoder
         self.encoder = nn.Sequential(
-            nn.Conv1d(in_channels=1, out_channels=8, kernel_size=20, stride=1, padding=1), # 180
+            nn.Conv1d(in_channels=1, out_channels=8, kernel_size=20, stride=1, padding=1), # 164 sample data, 180 real data
             nn.LeakyReLU(negative_slope=0.01),
             nn.BatchNorm1d(8),  
-            nn.MaxPool1d(2, stride=1),  # 179
+            nn.MaxPool1d(2, stride=1),  # 163 sample data, 179 real data
             nn.Dropout(0.1),  
             
-            nn.Conv1d(in_channels=8, out_channels=16, kernel_size=20, stride=1, padding=1), # 162
+            nn.Conv1d(in_channels=8, out_channels=16, kernel_size=20, stride=1, padding=1), # 146 sample data, 162 real data
             nn.LeakyReLU(negative_slope=0.01),
             nn.BatchNorm1d(16),  
-            nn.MaxPool1d(2, stride=1),  # 161
+            nn.MaxPool1d(2, stride=1),  # 145 sample data, 161 real data
             nn.Dropout(0.1),  
             
-            nn.Conv1d(in_channels=16, out_channels=32, kernel_size=20, stride=1, padding=1), # 144
+            nn.Conv1d(in_channels=16, out_channels=32, kernel_size=20, stride=1, padding=1), # 128 sample data, 144 real data
             nn.LeakyReLU(negative_slope=0.01),
             nn.BatchNorm1d(32),  
-            nn.MaxPool1d(2, stride=1),  # 143
+            nn.MaxPool1d(2, stride=1),  # 127 sample data, 143 real data
             nn.Dropout(0.1),  
             
-            nn.Conv1d(in_channels=32, out_channels=64, kernel_size=20, stride=1, padding=1), # 126
+            nn.Conv1d(in_channels=32, out_channels=64, kernel_size=20, stride=1, padding=1), # 110 sample data, 126 real data
             nn.LeakyReLU(negative_slope=0.01),
             nn.BatchNorm1d(64),  
-            nn.MaxPool1d(2, stride=1),  # 125
+            nn.MaxPool1d(2, stride=1),  # 109 sample data, 125 real data
             nn.Dropout(0.1), 
             
-            nn.Conv1d(in_channels=64, out_channels=128, kernel_size=20, stride=1, padding=1), # 108
+            nn.Conv1d(in_channels=64, out_channels=128, kernel_size=20, stride=1, padding=1), # 92 sample data, 108 real data
             nn.LeakyReLU(negative_slope=0.01),
             nn.BatchNorm1d(128),  
-            nn.MaxPool1d(2, stride=1),  # 107
+            nn.MaxPool1d(2, stride=1),  # 91 sample data, 107 real data
             nn.Dropout(0.1),  
             
-            nn.Conv1d(in_channels=128, out_channels=256, kernel_size=20, stride=1, padding=1), # 90
+            nn.Conv1d(in_channels=128, out_channels=256, kernel_size=20, stride=1, padding=1), # 74 sample data, 90 real data
             nn.LeakyReLU(negative_slope=0.01),
             nn.BatchNorm1d(256),  
-            nn.MaxPool1d(2, stride=1),  # 89
+            nn.MaxPool1d(2, stride=1),  # 73 sample data, 89 real data
             nn.Dropout(0.1), 
             
             nn.Flatten(),  
-            nn.Linear(256 * 89, 141),  
+            nn.Linear(256 * 73, 141),  
             nn.LeakyReLU(negative_slope=0.01)
         )
         
         # Decoder 
         self.decoder = nn.Sequential(
-            nn.Linear(141, 256 * 89),
+            nn.Linear(141, 256 * 73),
             nn.LeakyReLU(negative_slope=0.01),
-            nn.Unflatten(1, (256, 89)),
+            nn.Unflatten(1, (256, 73)),
             
-            nn.ConvTranspose1d(in_channels=256, out_channels=128, kernel_size=21, stride=1, padding=1), # 107
+            nn.ConvTranspose1d(in_channels=256, out_channels=128, kernel_size=21, stride=1, padding=1), # 91 sample data, 107 real data
             nn.LeakyReLU(negative_slope=0.01),
             #nn.BatchNorm1d(128),  
             #nn.Dropout(0.1),
             
-            nn.ConvTranspose1d(in_channels=128, out_channels=64, kernel_size=21, stride=1, padding=1), # 125
+            nn.ConvTranspose1d(in_channels=128, out_channels=64, kernel_size=21, stride=1, padding=1), # 109 sample data, 125 real data
             nn.LeakyReLU(negative_slope=0.01),
             nn.BatchNorm1d(64),  
             nn.Dropout(0.1),
             
-            nn.ConvTranspose1d(in_channels=64, out_channels=32, kernel_size=21, stride=1, padding=1), # 143
+            nn.ConvTranspose1d(in_channels=64, out_channels=32, kernel_size=21, stride=1, padding=1), # 127 sample data, 143 real data
             nn.LeakyReLU(negative_slope=0.01),
             #nn.BatchNorm1d(32), 
             #nn.Dropout(0.1),
             
-            nn.ConvTranspose1d(in_channels=32, out_channels=16, kernel_size=21, stride=1, padding=1), # 161
+            nn.ConvTranspose1d(in_channels=32, out_channels=16, kernel_size=21, stride=1, padding=1), # 145 sample data, 161 real data
             nn.LeakyReLU(negative_slope=0.01),
             nn.BatchNorm1d(16), 
             nn.Dropout(0.1),
             
-            nn.ConvTranspose1d(in_channels=16, out_channels=8, kernel_size=21, stride=1, padding=1), # 179
+            nn.ConvTranspose1d(in_channels=16, out_channels=8, kernel_size=21, stride=1, padding=1), # 163 sample data, 179 real data
             nn.LeakyReLU(negative_slope=0.01),
             #nn.BatchNorm1d(8), 
             #nn.Dropout(0.1),
             
-            nn.ConvTranspose1d(in_channels=8, out_channels=1, kernel_size=21, stride=1, padding=1) # 197
+            nn.ConvTranspose1d(in_channels=8, out_channels=1, kernel_size=21, stride=1, padding=1) # 181 sample data, 197 real data
         )
 
     def forward(self, x):
@@ -264,6 +264,9 @@ for epoch in range(num_epochs):
 
 if early_stop:
     print("Training stopped early")
+
+# Saving the Model Weights
+torch.save(autoencoder.state_dict(), 'autoencoder_weights.pth')
 
 #------------------------------------------------------------------------------------------
 # Plot Training And Validation Loss
@@ -355,7 +358,7 @@ plt.show()
 #------------------------------------------------------------------------------------------
 
 autoencoder = ConvAutoencoder()
-autoencoder.load_state_dict(torch.load('autoencoder_weights_4.pth'))
+autoencoder.load_state_dict(torch.load('autoencoder_weights.pth'))
 autoencoder.eval()
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
