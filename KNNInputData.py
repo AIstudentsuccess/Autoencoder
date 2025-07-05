@@ -16,7 +16,7 @@ from sklearn.preprocessing import Normalizer
 from sklearn.model_selection import GroupKFold
 
 # Load the main dataset
-data = pd.read_csv("Cleaned_Sample_data.csv", low_memory=False)
+data = pd.read_csv("cleaned_sample_data.csv", low_memory=False)
 
 #------------------------------------------------------------------------------------------
 # Data preparation
@@ -93,7 +93,7 @@ print(classification_report(y_test, y_pred))
 # KNN model with two-year gap and custom grouping
 #------------------------------------------------------------------------------------------
 
-# Note: To run the following code you need to restart the kernel. 
+# Note: To run the following code you need to restart the kernel, run the libraries and laod the cleaned sample data.  
 
 '''
 In this current approach, we assume that training sets can start from any semester and training and testing sets are formed by selecting consecutive semesters,
